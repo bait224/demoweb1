@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Byte" />
+    <NavigationProperty Name="products" Relationship="demoDBModel.category_id1" FromRole="category" ToRole="product" />
+  </EntityType>
+  <EntityContainer Name="demoDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="categories" EntityType="Self.category" />
+    <EntitySet Name="Units" EntityType="demoDBModel.Unit" />
+    <EntitySet Name="products" EntityType="demoDBModel.product" />
+    <AssociationSet Name="category_id1" Association="demoDBModel.category_id1">
+      <End Role="category" EntitySet="categories" />
+      <End Role="product" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="unitid1" Association="demoDBModel.unitid1">
+      <End Role="Unit" EntitySet="Units" />
+      <End Role="product" EntitySet="products" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="unit_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="products" Relationship="demoDBModel.unitid1" FromRole="Unit" ToRole="product" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="price" Type="Int32" />
+    <Property Name="categoryid" Type="Int32" />
+    <Property Name="url_img" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="unit_id" Type="Int32" />
+    <NavigationProperty Name="category" Relationship="demoDBModel.category_id1" FromRole="product" ToRole="category" />
+    <NavigationProperty Name="Unit" Relationship="demoDBModel.unitid1" FromRole="product" ToRole="Unit" />
+  </EntityType>
+  <Association Name="category_id1">
+    <End Type="demoDBModel.category" Role="category" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="demoDBModel.product" Role="product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="categoryid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="unitid1">
+    <End Type="demoDBModel.Unit" Role="Unit" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="demoDBModel.product" Role="product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="unit_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,50 @@
+﻿@model DemoWeb.Models.category
+
+@{
+    ViewBag.Title = "Changestatus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Change Status</h2>
+
+<h3>Are you sure you want to change status this category?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @if (Model.status == 1)
+            {
+                <p>On</p>
+            }
+            else if(Model.status == 0)
+            {
+                <p>Off</p>
+            }
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Change" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
+
+

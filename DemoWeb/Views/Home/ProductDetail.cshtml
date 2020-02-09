@@ -1,0 +1,25 @@
+﻿@model DemoWeb.Models.product
+@{
+    ViewBag.Title = "ProductDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ProductDetail</h2>
+<div class="row table table-bordered text-center">
+    <h3 class="text-info">@Html.DisplayFor(model => Model.name)</h3>
+    <div class="text-center">
+        <div class="img-responsive">
+            <a href='@Url.Action("ProductDetail", "Home", new { id = Model.id })'>
+                <img src="@Model.url_img" width="159" height="159" />
+            </a>
+        </div>
+        <div>
+            <p>@Html.DisplayFor(model => Model.price)đ/@Html.DisplayFor(model => Model.Unit.unit_name)</p>
+        </div>
+        <br />
+    </div>
+
+</div>
+
+
+
